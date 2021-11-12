@@ -289,7 +289,7 @@ ${OUTPUT}
 # ------------------------
 #  Main Flow
 # ------------------------
-#cd ${GITHUB_WORKSPACE}/${WORKING_DIR}
+cd ${GITHUB_WORKSPACE}/${WORKING_DIR}
 
 case ${RUN} in
 	"errcheck" )
