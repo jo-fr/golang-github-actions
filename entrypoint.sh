@@ -127,6 +127,10 @@ ${FMT_OUTPUT}
 # check_lint is excute golint and generate ${COMMENT} and ${SUCCESS}
 check_lint() {
 	set +e
+
+	echo $PWD
+	pwd
+	ls -la
 	# exclude tests folder by default
 	OUTPUT=$(sh -c "golint -set_exit_status  $(go list -f '{{.Dir}}' ./... | grep -v /tests/ | grep -v /docs/) $*" 2>&1)
 	SUCCESS=$?
