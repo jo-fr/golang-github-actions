@@ -41,7 +41,7 @@ check_errcheck() {
 
 	set +e
 	# exclude tests folder by default
-	OUTPUT=$(sh -c "errcheck ${FLAGS} $(go list ./... | grep -v /tests/) ${IGNORE_COMMAND} $*" 2>&1)
+	OUTPUT=$(sh -c "errcheck ${FLAGS}  $(go list -f '{{.Dir}}' ./... | grep -v /tests/ | grep -v /docs/) ${IGNORE_COMMAND} $*" 2>&1)
 	test -z "${OUTPUT}"
 	SUCCESS=$?
 
@@ -128,7 +128,7 @@ ${FMT_OUTPUT}
 check_lint() {
 	set +e
 	# exclude tests folder by default
-	OUTPUT=$(sh -c "golint -set_exit_status $(go list ./... | grep -v /tests/) $*" 2>&1)
+	OUTPUT=$(sh -c "golint -set_exit_status  $(go list -f '{{.Dir}}' ./... | grep -v /tests/ | grep -v /docs/) $*" 2>&1)
 	SUCCESS=$?
 
 	set -e
@@ -153,7 +153,7 @@ $(echo "${OUTPUT}" | sed -e '$d')
 check_sec() {
 	set +e
 	# exclude tests folder by default
-	gosec -out result.txt ${FLAGS} $(go list ./... | grep -v /tests/)
+	gosec -out result.txt ${FLAGS}  $(go list -f '{{.Dir}}' ./... | grep -v /tests/ | grep -v /docs/)
 	SUCCESS=$?
 
 	set -e
@@ -182,7 +182,7 @@ $(cat result.txt)
 check_shadow() {
 	set +e
 	# exclude tests folder by default
-	OUTPUT=$(sh -c "go vet -vettool=/go/bin/shadow ${FLAGS} $(go list ./... | grep -v /tests/) $*" 2>&1)
+	OUTPUT=$(sh -c "go vet -vettool=/go/bin/shadow ${FLAGS}  $(go list -f '{{.Dir}}' ./... | grep -v /tests/ | grep -v /docs/) $*" 2>&1)
 	SUCCESS=$?
 
 	set -e
@@ -203,7 +203,7 @@ ${OUTPUT}
 check_staticcheck() {
 	set +e
 	# exclude tests folder by default
-	OUTPUT=$(sh -c "staticcheck ${FLAGS} $(go list ./... | grep -v /tests/) $*" 2>&1)
+	OUTPUT=$(sh -c "staticcheck ${FLAGS}  $(go list -f '{{.Dir}}' ./... | grep -v /tests/ | grep -v /docs/) $*" 2>&1)
 	SUCCESS=$?
 
 	set -e
@@ -226,7 +226,7 @@ ${OUTPUT}
 check_vet() {
 	set +e
 	# exclude tests folder by default
-	OUTPUT=$(sh -c "go vet ${FLAGS} $(go list ./... | grep -v /tests/) $*" 2>&1)
+	OUTPUT=$(sh -c "go vet ${FLAGS}  $(go list -f '{{.Dir}}' ./... | grep -v /tests/ | grep -v /docs/) $*" 2>&1)
 	SUCCESS=$?
 
 	set -e
@@ -268,7 +268,7 @@ ${OUTPUT}
 check_ineffassign() {
 	set +e
 	# exclude tests folder by default
-	OUTPUT=$(sh -c "ineffassign $(go list ./... | grep -v /tests/) $*" 2>&1)
+	OUTPUT=$(sh -c "ineffassign  $(go list -f '{{.Dir}}' ./... | grep -v /tests/ | grep -v /docs/) $*" 2>&1)
 	SUCCESS=$?
 
 	set -e
