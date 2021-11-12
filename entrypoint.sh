@@ -132,7 +132,7 @@ check_lint() {
 	pwd
 	ls -la
 	# exclude tests folder by default
-	OUTPUT=$(sh -c "golint -set_exit_status  $(go list -f '{{.Dir}}' ./... | grep -v /tests/ | grep -v /docs/) $*" 2>&1)
+	OUTPUT=$(sh -c "golint -set_exit_status  $(go list -f '{{.Dir}}' ./... | grep -v /tests/ | grep -v /docs/ | sed 's/\/workspace\/github\///g') $*" 2>&1)
 	SUCCESS=$?
 
 	set -e
